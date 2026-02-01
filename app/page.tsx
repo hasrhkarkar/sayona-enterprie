@@ -1,65 +1,113 @@
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Image from "next/image";
+import homefirst from "../public/image/homepage-first.jpeg";
+import homesecond from "../public/image/homepage-second.jpeg";
+import homethird from "../public/image/homepage-third.jpeg";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="min-h-screen flex flex-col bg-[#050428] text-white font-sans">
+      <main className="flex-grow">
+        {/* Hero */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <div className="order-1 lg:order-1">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+            style={{ height:"760.4px" }}
+              src={homefirst}
+              alt="Wood piles"
+              width={760.4}
+              className="w-full h-full object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          </div>
+          <div className="px-12 py-20 bg-[#46a39a] text-[#07102b] flex items-center">
+            <div className="max-w-xl">
+              <h1
+                className="text-5xl font-semibold text-white
+ leading-tight mb-6">
+                Welcome to
+                <br />
+                Sayona Enterprise
+              </h1>
+              <p className="mb-6 text-[18px] font-medium text-white">
+                The Ultimate Source in Home Improvement
+              </p>
+              <p className="text-[13px] font-medium text-white">
+                Sayona enterprise is your one-stop shop for quality hardware and
+                brass components parts . Established in 2008, we’ve been
+                providing a huge selection of top quality materials at
+                affordable prices, enabling customers to stay within budget and
+                deadline. Our individualised service and expertise enable you to
+                get the job done faster and easier.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section: text left, image right */}
+        <section className="grid grid-cols-1 lg:grid-cols-2">
+          <div>
+            <Image
+              src={homesecond}
+              alt="Bags"
+              width={1200}
+              height={900}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="px-12 py-24 bg-[#000] text-[#f4b03c] flex items-center">
+            <div className="max-w-md">
+              <h2 className="text-3xl font-semibold mb-4">
+                Your Quality Hardware Materials Store
+              </h2>
+              <p className="text-sm leading-7 text-white/90">
+                Family owned for more than 18+ years, we have the proven knowledge,
+                professionalism and expertise to provide quality architectural
+                hardware and brass component manufacturing services to all
+                sectors of the construction industry. This includes government,
+                commercial, residential, health and education projects.
+                <br /><br />
+                We concentrate on building and maintaining long-lasting
+                relationships with our customers and business partners. We pride
+                ourselves on our reputation for being professional, easy to deal
+                with and supplying first class products and services.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section: image left, contact right */}
+        <section className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="px-12 py-24 bg-[#6d6a76] flex items-center">
+            <div className="mx-auto text-center text-white/90">
+              <h3 className="text-3xl text-[#f4b03c] mb-4">Contact Us</h3>
+              <p className="text-sm">
+                Plot No. -4770,Phase-3, 
+                <br />
+                GIDC, Dared, Jamnagar - 361004
+                <br />
+                India,
+              </p>
+              <p className="mt-4 text-sm">
+                
+                <br />
+              </p>
+              <p><a href="tel:+917984819991">+91 79848 19991</a></p>
+            </div>
+          </div>
+          <div>
+            <Image
+              src={homethird}
+              alt="Blocks"
+              width={760.4}
+              height={760.4}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </section>
       </main>
+
+      <Footer />
     </div>
   );
 }

@@ -1,16 +1,18 @@
-import nodemailer from 'nodemailer';
-import { NextResponse } from 'next/server';
+const express = require('express');
+const nodemailer = require('nodemailer');
+const cors = require('cors');
+require('dotenv').config();
 
-type Body = {
-  name?: string;
-  email?: string;
-  subject?: string;
-  message?: string;
-};
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-export async function POST(req: Request) {
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+app.post('/contact', async (req, res) => {
   try {
-    const body: Body = await req.json();
+    const body = req.body;
     const isResend = process.env.EMAIL_PROVIDER === 'resend';
 
     // Shared configuration
@@ -32,7 +34,7 @@ export async function POST(req: Request) {
       if (data.error) {
         throw new Error(data.error.message);
       }
-      return NextResponse.json({ ok: true, data });
+      return res.status(200).json({ ok: true, data });
     }
 
     // Fallback: Nodemailer Logic
@@ -43,7 +45,7 @@ export async function POST(req: Request) {
       const user = process.env.SMTP_USER;
       const pass = process.env.SMTP_PASS;
 
-      let transporter: nodemailer.Transporter;
+      let transporter;
       let usingTestAccount = false;
 
       if (!host || !user || !pass) {
@@ -58,13 +60,13 @@ export async function POST(req: Request) {
           });
           usingTestAccount = true;
         } else {
-          return NextResponse.json({ error: 'SMTP not configured on server.' }, { status: 500 });
+          return res.status(500).json({ error: 'SMTP not configured on server.' });
         }
       } else {
         transporter = nodemailer.createTransport({
           host,
           port,
-          secure: port === 465,
+          secure: port === 465, // true for 465, false for other ports
           auth: { user, pass },
         });
       }
@@ -72,31 +74,35 @@ export async function POST(req: Request) {
       // verify connection configuration
       try {
         await transporter.verify();
-      } catch (verifyErr: any) {
+      } catch (verifyErr) {
         console.error('SMTP verify failed:', verifyErr);
-        return NextResponse.json({ error: 'SMTP verify failed', details: verifyErr?.message || String(verifyErr) }, { status: 500 });
+        return res.status(500).json({ error: 'SMTP verify failed', details: verifyErr?.message || String(verifyErr) });
       }
 
       const info = await transporter.sendMail({
-        from: `${body.name || 'Website Contact'} <${user}>`,
+        from: `"${body.name || 'Website Contact'}" <${user}>`, // user is usually the authenticated email
         to: contactEmail,
         subject: body.subject || 'Website enquiry',
         text: `Name: ${body.name || ''}\nEmail: ${body.email || ''}\n\n${body.message || ''}`,
         html: `<p><strong>Name:</strong> ${body.name || ''}</p><p><strong>Email:</strong> ${body.email || ''}</p><p>${(body.message || '').replace(/\n/g, '<br/>')}</p>`,
       });
 
-      const responsePayload: any = { ok: true, info };
+      const responsePayload = { ok: true, info };
       if (usingTestAccount) {
         const preview = nodemailer.getTestMessageUrl(info);
         if (preview) responsePayload.preview = preview;
         responsePayload.note = 'Sent via Ethereal test account (dev only). Use preview URL to view the message.';
       }
 
-      return NextResponse.json(responsePayload);
+      return res.status(200).json(responsePayload);
     }
 
-  } catch (err: any) {
-    console.error('Error in /api/contact:', err);
-    return NextResponse.json({ error: err?.message || String(err) }, { status: 500 });
+  } catch (err) {
+    console.error('Error in /contact:', err);
+    return res.status(500).json({ error: err?.message || String(err) });
   }
-}
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

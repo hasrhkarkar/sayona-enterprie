@@ -7,7 +7,7 @@ export default function ContactForm() {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle'|'sending'|'success'|'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [error, setError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -21,7 +21,8 @@ export default function ContactForm() {
       return;
     }
     try {
-      const res = await fetch('/api/contact', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/contact';
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, subject, message }),

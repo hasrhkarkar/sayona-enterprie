@@ -66,3 +66,21 @@ If you want your backend to be at `api.sayonaenterprise.com`:
 2.  Go to the Contact page.
 3.  Submit the form.
 4.  Check if you receive the email.
+
+### Troubleshooting: "I can't see the Domain settings"
+
+If you cannot find where to add your custom domain in Vercel, follow these steps:
+
+1.  **Select Your Project**: From the Vercel Dashboard (https://vercel.com/dashboard), click on your project name (e.g., `sayona-enterprie`).
+2.  **Go to Settings**:
+    *   Look at the top navigation bar (where it says "Overview", "Deployments", "Analytics", "Logs", "Storage", "Settings").
+    *   Click on **Settings** (usually the last item on the right).
+3.  **Select Domains**:
+    *   On the left sidebar menu of the Settings page, click on **Domains** (it's usually the second or third item).
+4.  **Add Domain**:
+    *   You should see an input field that says "my-domain.com".
+    *   Enter `sayonaenterprise.com` there and click **Add**.
+5.  **DNS Verification**:
+    *   Vercel will show an "Invalid Configuration" status initially.
+    *   It will display the required DNS records (A Record and CNAME) below the domain name.
+    *   Copy these values to your domain registrar as described in the steps above.

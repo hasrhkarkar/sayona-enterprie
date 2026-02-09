@@ -7,8 +7,18 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+// Middleware
+app.use(cors({
+  origin: '*', // Allow all origins for now to fix the issue
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
+
+// Health check route
+app.get('/', (req, res) => {
+  res.send('Backend is running!');
+});
 
 app.post('/contact', async (req, res) => {
   try {

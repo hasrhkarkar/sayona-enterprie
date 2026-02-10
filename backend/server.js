@@ -8,16 +8,25 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 // Middleware
+// Middleware
 app.use(cors({
-  origin: '*', // Allow all origins for now to fix the issue
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
+  origin: '*', // Allow all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200
 }));
+
+// Request logging
+app.use((req, res, next) => {
+  console.log(`${req.method} request to ${req.url}`);
+  next();
+});
+
 app.use(express.json());
 
 // Health check route
 app.get('/', (req, res) => {
-  res.send('Backend is running!');
+  res.status(200).send('Backend is running!');
 });
 
 app.post('/contact', async (req, res) => {

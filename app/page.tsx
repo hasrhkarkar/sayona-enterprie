@@ -88,10 +88,8 @@ export default function Home() {
                 <br />
                 India,
               </p>
-              <p className="mt-4 text-sm">
-                
-                <br />
-              </p>
+             <br />
+              <a href="mailto:Info@sayonaenterprise.com" className="hover:underline">Info@sayonaenterprise.com</a>
               <p><a href="tel:+917984819991">+91 79848 19991</a></p>
             </div>
           </div>
